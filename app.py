@@ -6,7 +6,7 @@ import pandas as pd
 from predict_pipeline import create_features, generate_hourly_data, predict_data
 
 app = Flask(__name__)
-model = pickle.load(open('reg.pkl', 'rb'))
+model = pickle.load(open('reg2.pkl', 'rb'))
 
 @app.route('/')
 def home():
@@ -21,11 +21,12 @@ def predict():
         
         # start_date = request.form["start_date"]
         # end_date = request.form["end_date"]
+        sensor_id = json_data['sensor_id']
         start_date = json_data['start_date']
         end_date = json_data["end_date"]
         df = generate_hourly_data(start_date, end_date)
         df=create_features(df)
-        prediction_df = predict_data(model,df)
+        prediction_df = predict_data(model,df,sensor_id)
         json_data = prediction_df.to_json(orient='index', date_format='iso')
         return json_data
         # return render_template('prediction.html', prediction=json_data)
