@@ -24,12 +24,14 @@ def create_features(df):
 
 def predict_data(model,df,sensor_id):
     df['sensor_id'] = sensor_id
-    print(df)
+    
     features=['dayofweek','quarter','month','year','dayofyear','hour','sensor_id']
     prediction = model.predict(df[features])
     prediction_df = pd.DataFrame(index=df.index)
     prediction_df['avg_temp']=prediction[:,0]
     prediction_df['avg_humidity']=prediction[:,1]
+    # prediction_df['daily_avg_temp']=prediction_df['avg_temp'].rolling(24).mean()
+    # prediction_df['daily_avg_humidity']=prediction_df['avg_humidity'].rolling(24).mean()
     # json_data = prediction_df.to_json(orient='records')
     return prediction_df
 

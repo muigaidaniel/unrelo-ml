@@ -1,2 +1,1 @@
-prediction = model.predict(hourly_df)
-print(prediction)
+json_data = prediction_df.to_json(orient='
